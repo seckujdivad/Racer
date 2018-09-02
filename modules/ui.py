@@ -23,7 +23,7 @@ class UI:
         self._recursive_cache_pages([])
     
     def _recursive_cache_pages(self, path):
-        real_path = os.path.join(sys.path[0], 'uipages', *path)
+        real_path = os.path.join(sys.path[0], 'ui', 'pages', *path)
         
         current_entry = self._dict_entry_from_list(path, self.page_cache)
         
@@ -60,3 +60,6 @@ class UI:
     
     def set_title(self, title):
         self.root.title('{} - {}'.format(self.window_title, title))
+    
+    def get_styling(self, font_type, widget):
+        

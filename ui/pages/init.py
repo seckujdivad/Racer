@@ -4,7 +4,7 @@ class Page:
     def __init__(self, tools):
         self.tools = tools
         
-        label = tk.Label(self.tools['frame'], text = 'Hi')
+        label = tk.Label(self.tools['frame'], text = '')
         
         label.pack()
     

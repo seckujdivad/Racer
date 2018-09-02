@@ -1,0 +1,9 @@
+{
+	"widgets": {
+		"label": {
+			"relief": "flat",
+			"overrelief": "groove"
+		}
+	},
+	"fonts": {}
+}

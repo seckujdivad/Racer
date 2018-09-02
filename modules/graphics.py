@@ -51,13 +51,17 @@ class Scene:
     
     def populate_bsp(self):
         self.bsp = []
-        for model in self.scene['scene']:
+        for model in self.scene['scene']['models']:
             for poly in self.models[model['model']]['polygons']:
                 transformed_poly = []
                 for x, y, z in poly['coordinates']:
                     transformed_poly.append(self.tools.transform(*self.tools.scale(*self.tools.rotate(x, y, z, *model['rotation']), *model['scale']), *model['coords']))
                 self.bsp.append({'coordinates': transformed_poly,
                                  'material data': self.materials[poly['material']]})
+        
+        for brush in self.scene['scene']['brushes']:
+            self.bsp.append({'coordinates': brush['coords'],
+                             'material data': self.materials[brush['material']]})
         
         #### code for checking for intersecting polygons goes here (IN FUTURE)
     
