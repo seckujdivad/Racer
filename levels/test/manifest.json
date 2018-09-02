@@ -1,0 +1,11 @@
+{
+	"models": {
+		"triangle": "models/triangle.json",
+		"square": "models/square.json",
+		"floorpanel": "models/floorpanel.json"
+	},
+	"materials": {
+		"red": "materials/red.json",
+		"green": "materials/green.json"
+	}
+}
