@@ -72,6 +72,14 @@ class UI:
         output_dict['font'] = (self.styling['fonts'][font_type]['typeface'], self.styling['fonts'][font_type]['size'])
         return output_dict
     
+    def set_weight(self, frame, width, height, weight = 1, do_rows = True, do_columns = True):
+        for x in range(width):
+            for y in range(height):
+                if do_columns:
+                    frame.columnconfigure(y, weight)
+            if do_rows:
+                frame.rowconfigure(x, weight)
+    
     def cache_styling(self):
         with open(os.path.join(sys.path[0], 'ui', 'styling.json'), 'r') as file:
             self.styling = json.load(file)
