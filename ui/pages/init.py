@@ -4,9 +4,9 @@ class Page:
     def __init__(self, tools):
         self.tools = tools
         
-        label = tk.Label(self.tools['frame'], text = '')
+        title_label = tk.Label(self.tools['frame'], text = 'Racer', **self.tools['styling']('large', 'label'))
         
-        label.pack()
+        title_label.grid(row = 0, column = 0, sticky = 'NESW')
     
     def show(self):
         pass

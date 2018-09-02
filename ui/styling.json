@@ -1,9 +1,25 @@
 {
 	"widgets": {
-		"label": {
+		"button": {
 			"relief": "flat",
 			"overrelief": "groove"
+		},
+		"label": {
+			"relief": "flat"
 		}
 	},
-	"fonts": {}
+	"fonts": {
+		"small": {
+			"typeface": "",
+			"size": 9
+		},
+		"medium": {
+			"typeface": "",
+			"size": 15
+		},
+		"large": {
+			"typeface": "",
+			"size": 50
+		}
+	}
 }

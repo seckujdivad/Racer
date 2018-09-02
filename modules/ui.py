@@ -3,14 +3,18 @@ import importlib.util
 import threading
 import os
 import sys
+import json
 
 class UI:
     def __init__(self, window_title):
-        self.page_cache = {}
         self.window_title = window_title
+        
+        self.page_cache = {}
+        self.styling = {}
     
         threading.Thread(target = self.main_thread, name = 'UI main thread').start()
     
+        self.cache_styling()
         self.cache_all_pages()
     
     def main_thread(self):
@@ -34,7 +38,8 @@ class UI:
                 spec.loader.exec_module(module)
                 
                 current_entry[item[:len(item) - 3]] = module.Page({'frame': tk.Frame(self.root),
-                                                                   'set title': self.set_title})
+                                                                   'set title': self.set_title,
+                                                                   'styling': self.get_styling})
                 
             elif not item == '__pycache__':
                 current_entry[item] = {}
@@ -62,4 +67,10 @@ class UI:
         self.root.title('{} - {}'.format(self.window_title, title))
     
     def get_styling(self, font_type, widget):
-        
+        output_dict = self.styling['widgets'][widget]
+        output_dict['font'] = (self.styling['fonts'][font_type]['typeface'], self.styling['fonts'][font_type]['size'])
+        return output_dict
+    
+    def cache_styling(self):
+        with open(os.path.join(sys.path[0], 'ui', 'styling.json'), 'r') as file:
+            self.styling = json.load(file)
