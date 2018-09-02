@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 *.pyo
+*.pyc
+ui/pages/__pycache__/init.cpython-37.pyc
