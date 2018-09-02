@@ -11,6 +11,7 @@ class UI:
         
         self.page_cache = {}
         self.styling = {}
+        self.binds = {}
     
         threading.Thread(target = self.main_thread, name = 'UI main thread').start()
     
@@ -74,3 +75,17 @@ class UI:
     def cache_styling(self):
         with open(os.path.join(sys.path[0], 'ui', 'styling.json'), 'r') as file:
             self.styling = json.load(file)
+    
+    def bind(self, event, function):
+        if event in self.binds:
+            self.binds[event].append(function)
+        else:
+            self.binds[event] = function
+    
+    def call_bind(self, event): 
+        if event in self.binds:
+            for function in self.binds[event]:
+                function()
+    
+    def clear_bound(self, event):
+        self.binds[event] = []
