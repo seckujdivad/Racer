@@ -12,6 +12,7 @@ class UI:
         self.page_cache = {}
         self.styling = {}
         self.binds = {}
+        self.current_page = None
     
         threading.Thread(target = self.main_thread, name = 'UI main thread').start()
     
@@ -40,7 +41,10 @@ class UI:
                 
                 current_entry[item[:len(item) - 3]] = module.Page({'frame': tk.Frame(self.root),
                                                                    'set title': self.set_title,
-                                                                   'styling': self.get_styling})
+                                                                   'get styling': self.get_styling,
+                                                                   'set weight': self.set_weight,
+                                                                   'bind': self.bind,
+                                                                   'call bind': self.call_bind})
                 
             elif not item == '__pycache__':
                 current_entry[item] = {}
@@ -59,10 +63,15 @@ class UI:
         page.tools['frame'].pack(fill = tk.BOTH, expand = True)
         page.show()
         
+        self.hide_page(self.current_page)
+        self.current_page = address
+        
     def hide_page(self, address):
         page = self._dict_entry_from_list(address, self.page_cache)
         page.tools['frame'].pack_destroy()
         page.hide()
+        
+        self.current_page = None
     
     def set_title(self, title):
         self.root.title('{} - {}'.format(self.window_title, title))
@@ -72,13 +81,13 @@ class UI:
         output_dict['font'] = (self.styling['fonts'][font_type]['typeface'], self.styling['fonts'][font_type]['size'])
         return output_dict
     
-    def set_weight(self, frame, width, height, weight = 1, do_rows = True, do_columns = True):
+    def set_weight(self, frame, width, height, weight_ = 1, do_rows = True, do_columns = True):
         for x in range(width):
             for y in range(height):
                 if do_columns:
-                    frame.columnconfigure(y, weight)
+                    frame.rowconfigure(y, weight = weight_)
             if do_rows:
-                frame.rowconfigure(x, weight)
+                frame.columnconfigure(x, weight = weight_)
     
     def cache_styling(self):
         with open(os.path.join(sys.path[0], 'ui', 'styling.json'), 'r') as file:
@@ -97,3 +106,8 @@ class UI:
     
     def clear_bound(self, event):
         self.binds[event] = []
+    
+    def clear_from_bind(self, event, function):
+        if event in self.binds:
+            if function in self.binds[event]:
+                self.binds[event].remove(function)
