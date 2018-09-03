@@ -61,7 +61,9 @@ class UI:
     def load_page(self, address):
         page = self._dict_entry_from_list(address, self.page_cache)
         page.tools['frame'].pack(fill = tk.BOTH, expand = True)
-        page.show()
+        
+        if 'show' in dir(page):
+            page.show()
         
         self.hide_page(self.current_page)
         self.current_page = address
@@ -69,7 +71,9 @@ class UI:
     def hide_page(self, address):
         page = self._dict_entry_from_list(address, self.page_cache)
         page.tools['frame'].pack_destroy()
-        page.hide()
+        
+        if 'hide' in dir(page):
+            page.hide()
         
         self.current_page = None
     
